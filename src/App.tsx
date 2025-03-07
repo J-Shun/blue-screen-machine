@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
+function BlueScreenContainer() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+    <div className='w-full min-h-screen bg-[#0078D7] text-[#EBF3FB] px-[128px] pt-[128px]'>
+      <h1 className='text-[164px]'>:(</h1>
+      <p className='text-3xl mb-4'>您的裝置發生問題，因此必須重新啟動。</p>
+      <p className='text-3xl mb-8'>
+        我們剛剛正在收集某些錯誤資訊，接著您可以重新啟動
       </p>
-    </>
-  )
+      <p className='text-3xl mb-8'>已完成 XX%</p>
+      <p className='text-1xl mb-8'>
+        如需此問題與可能修正的詳細資訊，請瀏覽 https://www.windows.com/stopcode
+      </p>
+      <p className='text-1xl mb-2'>致電支援人員時，請提供此資訊:</p>
+      <p className='text-1xl mb-2'>停止代碼: 0x0000005</p>
+      <p className='text-1xl'>失敗的項目: win32kbase.sys</p>
+    </div>
+  );
 }
 
-export default App
+function App() {
+  return (
+    <>
+      <BlueScreenContainer />
+    </>
+  );
+}
+
+export default App;
