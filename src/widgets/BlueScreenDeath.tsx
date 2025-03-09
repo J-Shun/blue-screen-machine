@@ -1,6 +1,6 @@
 const BlueScreenDeath = ({ progress }: { progress: number }) => {
   return (
-    <div className='w-full min-h-screen bg-[#0078D7] text-[#EBF3FB] px-[128px] pt-[128px] '>
+    <div className='flex-1 bg-[#0078D7] text-[#EBF3FB] px-[128px] pt-[128px] '>
       <h1 className='text-[164px]'>:(</h1>
       <p className='text-3xl mb-4'>您的裝置發生問題，因此必須重新啟動。</p>
       <p className='text-3xl mb-8'>

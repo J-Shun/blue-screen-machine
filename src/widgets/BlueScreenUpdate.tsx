@@ -2,7 +2,7 @@ import Spinner from './Spinner';
 
 const BlueScreenUpdate = ({ progress }: { progress: number }) => {
   return (
-    <div className='w-full min-h-screen bg-[#0078D7] text-[#EBF3FB] text-2xl flex flex-col items-center justify-center gap-2'>
+    <div className='flex-1 bg-[#0078D7] text-[#EBF3FB] text-2xl flex flex-col items-center justify-center gap-2'>
       <Spinner />
       <p>正在處理更新</p>
       <p>{progress}% 完成</p>
