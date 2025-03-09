@@ -3,7 +3,7 @@ name: Deploy Vite to GitHub Pages
 on:
   push:
     branches:
-      - main # 監聽 main 分支的變更
+      - main
 
 permissions:
   contents: read
@@ -27,16 +27,17 @@ jobs:
         run: |
           npm install
           npm run build
-          touch dist/.nojekyll  # 避免 GitHub Pages 解析錯誤
+          touch dist/.nojekyll
 
-      - name: 部署到 GitHub Pages
-        uses: actions/upload-pages-artifact@v2
+      - name: 上傳 artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: dist # 指定輸出目錄
+          name: github-pages # 確保名稱為 "github-pages"
+          path: dist
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: 部署到 GitHub Pages
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
