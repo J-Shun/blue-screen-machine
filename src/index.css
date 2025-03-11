@@ -1,7 +1,6 @@
 @import 'tailwindcss';
 
 /* source: https://uiverse.io/SelfMadeSystem/black-yak-68 */
-
 :root {
   --size: 64px;
   --dot-size: 6px;
@@ -107,4 +106,27 @@
   100% {
     opacity: 0;
   }
+}
+
+/* source: https://cssloaders.github.io/ */
+/* Mac */
+.loader-bar {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  display: inline-block;
+  position: relative;
+  background: rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+
+.loader-proccess {
+  box-sizing: border-box;
+  width: 0;
+  height: 6px;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: width 0.5s;
 }

@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import BlueScreenDeath from '../widgets/BlueScreenDeath';
 import BlueScreenUpdate from '../widgets/BlueScreenUpdate';
+import MacUpdate from '../widgets/MacUpdate';
 import { CgScreen } from 'react-icons/cg';
 import { LuMoveRight } from 'react-icons/lu';
 
 const SCREEN_TYPE = {
   BLUSE_SCREEN_DEATH: 'bluse_screen_death',
   BLUSE_SCREEN_UPDATE: 'bluse_screen_update',
+  MAC_UPDATE: 'mac_update',
 };
 
 const MODE_TYPE = {
@@ -19,6 +21,7 @@ type ScreenType = keyof typeof SCREEN_TYPE;
 const screenTypeMapping = [
   SCREEN_TYPE.BLUSE_SCREEN_DEATH,
   SCREEN_TYPE.BLUSE_SCREEN_UPDATE,
+  SCREEN_TYPE.MAC_UPDATE,
 ];
 
 const modeTypeMapping = [
@@ -253,6 +256,10 @@ const Screen = () => {
 
       {screenType === SCREEN_TYPE.BLUSE_SCREEN_UPDATE && (
         <BlueScreenUpdate progress={progress} />
+      )}
+
+      {screenType === SCREEN_TYPE.MAC_UPDATE && (
+        <MacUpdate progress={progress} />
       )}
 
       <SideBar
