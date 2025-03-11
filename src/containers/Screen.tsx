@@ -82,6 +82,7 @@ const SideBar = ({
   onClick,
   onHide,
   onStart,
+  onReset,
 }: {
   isShow: boolean;
   screenType: ScreenType;
@@ -89,6 +90,7 @@ const SideBar = ({
   onClick: ({ type }: { type: ScreenType }) => void;
   onHide: (e: React.MouseEvent) => void;
   onStart: () => void;
+  onReset: () => void;
 }) => {
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
@@ -122,6 +124,12 @@ const SideBar = ({
       return;
     }
     setMinute(value);
+  };
+
+  const reset = () => {
+    setHour(0);
+    setMinute(0);
+    onReset();
   };
 
   return (
@@ -189,8 +197,9 @@ const SideBar = ({
         </div>
       )}
 
-      <div className='mb-6'>
+      <div className='flex gap-2 mb-6'>
         <Button onClick={onStart}>{isProcessing ? '暫停' : '開始'}</Button>
+        <Button onClick={reset}>重置</Button>
       </div>
 
       <div className='flex gap-2'>
@@ -227,6 +236,10 @@ const Screen = () => {
 
   const toggleStart = () => {
     setIsProcessing((prev) => !prev);
+  };
+
+  const handleReset = () => {
+    setProgress(0);
   };
 
   /* 更新時自動跑的數字特效 */
@@ -269,6 +282,7 @@ const Screen = () => {
         onClick={handleClick}
         onHide={handleHideSideBar}
         onStart={toggleStart}
+        onReset={handleReset}
       />
     </div>
   );
