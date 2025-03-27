@@ -4,11 +4,13 @@ import BlueScreenUpdate from "../widgets/BlueScreenUpdate";
 import MacUpdate from "../widgets/MacUpdate";
 import { CgScreen } from "react-icons/cg";
 import { LuMoveRight } from "react-icons/lu";
+import { Button, IconButton } from "../widgets/button";
+import { getOS } from "../utils/common";
 
 const SCREEN_TYPE = {
-  BLUE_SCREEN_DEATH: "blue_screen_death",
-  BLUE_SCREEN_UPDATE: "blue_screen_update",
-  MAC_UPDATE: "mac_update",
+  BLUE_SCREEN_DEATH: "blueScreenDeath",
+  BLUE_SCREEN_UPDATE: "blueScreenUpdate",
+  MAC_UPDATE: "macUpdate",
 };
 
 const MODE_TYPE = {
@@ -23,57 +25,6 @@ const screenTypeMapping = [
   SCREEN_TYPE.BLUE_SCREEN_UPDATE,
   SCREEN_TYPE.MAC_UPDATE,
 ];
-
-const modeTypeMapping = [
-  {
-    text: "無限循環模式",
-    value: MODE_TYPE.INFINITE,
-  },
-  {
-    text: "定時模式",
-    value: MODE_TYPE.TIMING,
-  },
-];
-
-const Button = ({
-  onClick,
-  children,
-  active,
-}: {
-  onClick: () => void;
-  children: React.ReactNode;
-  active?: boolean;
-}) => {
-  return (
-    <button
-      type='button'
-      className={`hover:bg-gray-950 text-white px-4 py-2 rounded-md translation duration-200 cursor-pointer ${
-        active ? "bg-gray-950" : "bg-gray-700"
-      }`}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-};
-
-const IconButton = ({
-  children,
-  onClick,
-}: {
-  children: React.ReactNode;
-  onClick: (e: React.MouseEvent) => void;
-}) => {
-  return (
-    <button
-      type='button'
-      className='bg-gray-700 hover:bg-gray-950 text-white p-2 rounded-full text-md cursor-pointer transition duration-200'
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-};
 
 const SideBar = ({
   isShow,
@@ -159,15 +110,19 @@ const SideBar = ({
       <div className='mb-6'>
         <p className='text-white text-xl mb-2'>選擇模式</p>
         <div className='flex gap-1'>
-          {modeTypeMapping.map((item) => (
-            <Button
-              key={item.value}
-              onClick={() => setMode(item.value)}
-              active={mode === item.value}
-            >
-              {item.text}
-            </Button>
-          ))}
+          <Button
+            onClick={() => setMode(MODE_TYPE.INFINITE)}
+            active={mode === MODE_TYPE.INFINITE}
+          >
+            無限循環模式
+          </Button>
+
+          <Button
+            onClick={() => setMode(MODE_TYPE.TIMING)}
+            active={mode === MODE_TYPE.TIMING}
+          >
+            定時模式
+          </Button>
         </div>
       </div>
 
@@ -256,6 +211,23 @@ const Screen = () => {
 
     return () => clearInterval(interval);
   }, [isProcessing]);
+
+  /* 根據作業系統選擇不同的螢幕樣式 */
+  useEffect(() => {
+    const os = getOS();
+
+    switch (os) {
+      case "Windows":
+        setScreenType(SCREEN_TYPE.BLUE_SCREEN_DEATH);
+        break;
+      case "MacOS":
+        setScreenType(SCREEN_TYPE.MAC_UPDATE);
+        break;
+      default:
+        setScreenType(SCREEN_TYPE.MAC_UPDATE);
+        break;
+    }
+  }, []);
 
   return (
     <div
