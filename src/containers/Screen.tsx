@@ -1,36 +1,36 @@
-import { useEffect, useState } from 'react';
-import BlueScreenDeath from '../widgets/BlueScreenDeath';
-import BlueScreenUpdate from '../widgets/BlueScreenUpdate';
-import MacUpdate from '../widgets/MacUpdate';
-import { CgScreen } from 'react-icons/cg';
-import { LuMoveRight } from 'react-icons/lu';
+import { useEffect, useState } from "react";
+import BlueScreenDeath from "../widgets/BlueScreenDeath";
+import BlueScreenUpdate from "../widgets/BlueScreenUpdate";
+import MacUpdate from "../widgets/MacUpdate";
+import { CgScreen } from "react-icons/cg";
+import { LuMoveRight } from "react-icons/lu";
 
 const SCREEN_TYPE = {
-  BLUSE_SCREEN_DEATH: 'bluse_screen_death',
-  BLUSE_SCREEN_UPDATE: 'bluse_screen_update',
-  MAC_UPDATE: 'mac_update',
+  BLUE_SCREEN_DEATH: "blue_screen_death",
+  BLUE_SCREEN_UPDATE: "blue_screen_update",
+  MAC_UPDATE: "mac_update",
 };
 
 const MODE_TYPE = {
-  INFINITE: 'infinite',
-  TIMING: 'timing',
+  INFINITE: "infinite",
+  TIMING: "timing",
 };
 
 type ScreenType = keyof typeof SCREEN_TYPE;
 
 const screenTypeMapping = [
-  SCREEN_TYPE.BLUSE_SCREEN_DEATH,
-  SCREEN_TYPE.BLUSE_SCREEN_UPDATE,
+  SCREEN_TYPE.BLUE_SCREEN_DEATH,
+  SCREEN_TYPE.BLUE_SCREEN_UPDATE,
   SCREEN_TYPE.MAC_UPDATE,
 ];
 
 const modeTypeMapping = [
   {
-    text: '無限循環模式',
+    text: "無限循環模式",
     value: MODE_TYPE.INFINITE,
   },
   {
-    text: '定時模式',
+    text: "定時模式",
     value: MODE_TYPE.TIMING,
   },
 ];
@@ -48,7 +48,7 @@ const Button = ({
     <button
       type='button'
       className={`hover:bg-gray-950 text-white px-4 py-2 rounded-md translation duration-200 cursor-pointer ${
-        active ? 'bg-gray-950' : 'bg-gray-700'
+        active ? "bg-gray-950" : "bg-gray-700"
       }`}
       onClick={onClick}
     >
@@ -135,7 +135,7 @@ const SideBar = ({
   return (
     <div
       className={`absolute right-0 top-0 bottom-0 w-86 flex flex-col items-start border-l-1 border-gray-200 px-4 py-12 transition-all
-    duration-100 cursor-auto ${isShow ? 'translate-x-0' : 'translate-x-full'}`}
+    duration-100 cursor-auto ${isShow ? "translate-x-0" : "translate-x-full"}`}
     >
       <h2 className='w-full text-white text-3xl font-bold text-center mb-8'>
         設定選單
@@ -198,7 +198,7 @@ const SideBar = ({
       )}
 
       <div className='flex gap-2 mb-6'>
-        <Button onClick={onStart}>{isProcessing ? '暫停' : '開始'}</Button>
+        <Button onClick={onStart}>{isProcessing ? "暫停" : "開始"}</Button>
         <Button onClick={reset}>重置</Button>
       </div>
 
@@ -217,7 +217,7 @@ const SideBar = ({
 
 const Screen = () => {
   const [progress, setProgress] = useState(0);
-  const [screenType, setScreenType] = useState(SCREEN_TYPE.BLUSE_SCREEN_DEATH);
+  const [screenType, setScreenType] = useState(SCREEN_TYPE.BLUE_SCREEN_DEATH);
   const [isShowSideBar, setIsShowSideBar] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -263,11 +263,11 @@ const Screen = () => {
       id='screen'
       onClick={handleShowSideBar}
     >
-      {screenType === SCREEN_TYPE.BLUSE_SCREEN_DEATH && (
+      {screenType === SCREEN_TYPE.BLUE_SCREEN_DEATH && (
         <BlueScreenDeath progress={progress} />
       )}
 
-      {screenType === SCREEN_TYPE.BLUSE_SCREEN_UPDATE && (
+      {screenType === SCREEN_TYPE.BLUE_SCREEN_UPDATE && (
         <BlueScreenUpdate progress={progress} />
       )}
 
