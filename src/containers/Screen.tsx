@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
+import { Tooltip } from "react-tooltip";
 import BlueScreenDeath from "../widgets/BlueScreenDeath";
 import BlueScreenUpdate from "../widgets/BlueScreenUpdate";
 import MacUpdate from "../widgets/MacUpdate";
-import { CgScreen } from "react-icons/cg";
-import { LuMoveRight } from "react-icons/lu";
+import { MdRemoveRedEye } from "react-icons/md";
 import { Button, IconButton } from "../widgets/button";
 import { getOS } from "../utils/common";
 
@@ -20,18 +20,11 @@ const MODE_TYPE = {
 
 type ScreenType = keyof typeof SCREEN_TYPE;
 
-const screenTypeMapping = [
-  SCREEN_TYPE.BLUE_SCREEN_DEATH,
-  SCREEN_TYPE.BLUE_SCREEN_UPDATE,
-  SCREEN_TYPE.MAC_UPDATE,
-];
-
-const SideBar = ({
+const Modal = ({
   isShow,
   screenType,
   isProcessing,
   onClick,
-  onHide,
   onStart,
   onReset,
 }: {
@@ -39,23 +32,13 @@ const SideBar = ({
   screenType: ScreenType;
   isProcessing: boolean;
   onClick: ({ type }: { type: ScreenType }) => void;
-  onHide: (e: React.MouseEvent) => void;
   onStart: () => void;
   onReset: () => void;
 }) => {
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [mode, setMode] = useState(MODE_TYPE.INFINITE);
-
-  const isFullScreen = document.fullscreenElement;
-
-  const toggleFullscreen = () => {
-    if (isFullScreen) {
-      document.exitFullscreen();
-    } else {
-      document.documentElement.requestFullscreen();
-    }
-  };
+  const [isShowBackground, setIsShowBackground] = useState(false);
 
   const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
@@ -83,88 +66,122 @@ const SideBar = ({
     onReset();
   };
 
+  const handleMouseDown = () => {
+    setIsShowBackground(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsShowBackground(false);
+  };
+
   return (
     <div
-      className={`absolute right-0 top-0 bottom-0 w-86 flex flex-col items-start border-l-1 border-gray-200 px-4 py-12 transition-all
-    duration-100 cursor-auto ${isShow ? "translate-x-0" : "translate-x-full"}`}
+      className={`fixed inset-0 flex items-center justify-center transition-all duration-500 ${
+        isShow
+          ? "opacity-100 pointer-events-auto"
+          : "opacity-0 pointer-events-none"
+      } ${isShowBackground ? "" : "backdrop-filter backdrop-blur-lg"}`}
     >
-      <h2 className='w-full text-white text-3xl font-bold text-center mb-8'>
-        設定選單
-      </h2>
+      <div
+        className={`w-116 bg-gray-800 py-12 px-6 rounded-2xl shadow-lg flex flex-col items-start transition-all duration-500 ${
+          isShowBackground ? "opacity-0" : "opacity-100"
+        }`}
+      >
+        <h2 className='w-full text-white text-3xl font-bold text-center mb-8'>
+          設定選單
+        </h2>
 
-      <div className='mb-6'>
-        <p className='text-white text-xl mb-2'>選擇樣式</p>
-        <div className='flex gap-1'>
-          {screenTypeMapping.map((type, index) => (
+        <div className='mb-8'>
+          <p className='text-white text-xl mb-3'>選擇樣式</p>
+          <div className='flex gap-2'>
             <Button
-              key={type}
-              onClick={() => onClick({ type: type as ScreenType })}
-              active={type === screenType}
+              onClick={() =>
+                onClick({ type: SCREEN_TYPE.BLUE_SCREEN_DEATH as ScreenType })
+              }
+              active={screenType === SCREEN_TYPE.BLUE_SCREEN_DEATH}
             >
-              {index + 1}
+              Windows 藍屏
             </Button>
-          ))}
+            <Button
+              onClick={() =>
+                onClick({ type: SCREEN_TYPE.BLUE_SCREEN_UPDATE as ScreenType })
+              }
+              active={screenType === SCREEN_TYPE.BLUE_SCREEN_UPDATE}
+            >
+              Windows 更新
+            </Button>
+            <Button
+              onClick={() =>
+                onClick({ type: SCREEN_TYPE.MAC_UPDATE as ScreenType })
+              }
+              active={screenType === SCREEN_TYPE.MAC_UPDATE}
+            >
+              Mac 更新
+            </Button>
+          </div>
         </div>
-      </div>
 
-      <div className='mb-6'>
-        <p className='text-white text-xl mb-2'>選擇模式</p>
-        <div className='flex gap-1'>
-          <Button
-            onClick={() => setMode(MODE_TYPE.INFINITE)}
-            active={mode === MODE_TYPE.INFINITE}
-          >
-            無限循環模式
-          </Button>
+        <div className='mb-8'>
+          <p className='text-white text-xl mb-3'>選擇模式</p>
+          <div className='flex gap-2'>
+            <Button
+              onClick={() => setMode(MODE_TYPE.INFINITE)}
+              active={mode === MODE_TYPE.INFINITE}
+            >
+              無限循環
+            </Button>
 
-          <Button
-            onClick={() => setMode(MODE_TYPE.TIMING)}
-            active={mode === MODE_TYPE.TIMING}
-          >
-            定時模式
-          </Button>
+            <Button
+              onClick={() => setMode(MODE_TYPE.TIMING)}
+              active={mode === MODE_TYPE.TIMING}
+            >
+              定時
+            </Button>
+          </div>
         </div>
-      </div>
 
-      {mode === MODE_TYPE.TIMING && (
-        <div className='mb-6'>
-          <p className='text-white text-xl mb-2'>時間設定</p>
-          <input
-            type='text'
-            className='bg-gray-800 text-white px-4 py-2 w-20 rounded-md'
-            placeholder='小時'
-            onChange={handleHourChange}
-            value={hour}
-            min={0}
-            max={24}
-          />
-          <span className='text-white'> : </span>
+        {mode === MODE_TYPE.TIMING && (
+          <div className='mb-8'>
+            <p className='text-white text-xl mb-3'>時間設定</p>
+            <input
+              type='text'
+              className='bg-gray-800 text-white px-4 py-2 w-20 rounded-md border-2 border-gray-600'
+              placeholder='小時'
+              onChange={handleHourChange}
+              value={hour}
+              min={0}
+              max={24}
+            />
 
-          <input
-            type='text'
-            className='bg-gray-800 text-white px-4 py-2 w-20 rounded-md'
-            placeholder='分鐘'
-            onChange={handleMinuteChange}
-            value={minute}
-            min={0}
-            max={60}
-          />
+            <span className='text-white px-2'> : </span>
+
+            <input
+              type='text'
+              className='bg-gray-800 text-white px-4 py-2 w-20 rounded-md border-2 border-gray-600'
+              placeholder='分鐘'
+              onChange={handleMinuteChange}
+              value={minute}
+              min={0}
+              max={60}
+            />
+          </div>
+        )}
+
+        <div className='flex gap-2 mb-8'>
+          <Button onClick={onStart}>{isProcessing ? "暫停" : "開始"}</Button>
+          <Button onClick={reset}>重置</Button>
         </div>
-      )}
 
-      <div className='flex gap-2 mb-6'>
-        <Button onClick={onStart}>{isProcessing ? "暫停" : "開始"}</Button>
-        <Button onClick={reset}>重置</Button>
-      </div>
-
-      <div className='flex gap-2'>
-        <IconButton onClick={toggleFullscreen}>
-          <CgScreen />
-        </IconButton>
-
-        <IconButton onClick={onHide}>
-          <LuMoveRight />
-        </IconButton>
+        <div>
+          <Tooltip anchorSelect='.show-background' place='top'>
+            持續點擊以顯示背景
+          </Tooltip>
+          <a className='show-background' data-tooltip-offset={10}>
+            <IconButton onMouseUp={handleMouseUp} onMouseDown={handleMouseDown}>
+              <MdRemoveRedEye />
+            </IconButton>
+          </a>
+        </div>
       </div>
     </div>
   );
@@ -180,17 +197,10 @@ const Screen = () => {
     setScreenType(type);
   };
 
-  const handleHideSideBar = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleStart = () => {
+    setIsProcessing(true);
     setIsShowSideBar(false);
-  };
-
-  const handleShowSideBar = () => {
-    setIsShowSideBar(true);
-  };
-
-  const toggleStart = () => {
-    setIsProcessing((prev) => !prev);
+    document.documentElement.requestFullscreen();
   };
 
   const handleReset = () => {
@@ -207,7 +217,7 @@ const Screen = () => {
         }
         return prev + 1;
       });
-    }, 1250);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [isProcessing]);
@@ -229,12 +239,24 @@ const Screen = () => {
     }
   }, []);
 
+  /* 如果跳出全螢幕，就出現 Modal 並停止計算 */
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement) {
+        setIsShowSideBar(true);
+        setIsProcessing(false);
+      }
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
+
   return (
-    <div
-      className='w-full min-h-screen flex flex-col relative overflow-hidden cursor-none'
-      id='screen'
-      onClick={handleShowSideBar}
-    >
+    <div className='w-full min-h-screen flex flex-col relative overflow-hidden'>
       {screenType === SCREEN_TYPE.BLUE_SCREEN_DEATH && (
         <BlueScreenDeath progress={progress} />
       )}
@@ -247,13 +269,12 @@ const Screen = () => {
         <MacUpdate progress={progress} />
       )}
 
-      <SideBar
+      <Modal
         isShow={isShowSideBar}
         screenType={screenType as ScreenType}
         isProcessing={isProcessing}
         onClick={handleClick}
-        onHide={handleHideSideBar}
-        onStart={toggleStart}
+        onStart={handleStart}
         onReset={handleReset}
       />
     </div>
