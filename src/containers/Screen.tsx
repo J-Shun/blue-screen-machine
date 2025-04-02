@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Select from "../widgets/select";
 import { Tooltip } from "react-tooltip";
 import BlueScreenDeath from "../widgets/BlueScreenDeath";
 import BlueScreenUpdate from "../widgets/BlueScreenUpdate";
@@ -35,34 +36,43 @@ const Modal = ({
   onStart: () => void;
   onReset: () => void;
 }) => {
-  const [hour, setHour] = useState(0);
-  const [minute, setMinute] = useState(0);
+  const [hour, setHour] = useState("");
+  const [minute, setMinute] = useState("");
   const [mode, setMode] = useState(MODE_TYPE.INFINITE);
   const [isShowBackground, setIsShowBackground] = useState(false);
 
-  const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    if (isNaN(value)) return;
-    if (value > 24) {
-      setHour(24);
-      return;
-    }
-    setHour(value);
+  const hourOptions = Array.from({ length: 25 }, (_, i) => {
+    const value = i < 10 ? `0${i}` : `${i}`;
+    return {
+      text: value,
+      value: `${i}`,
+      id: `hour-${value}`,
+    };
+  });
+  const minuteOptions = Array.from({ length: 60 }, (_, i) => {
+    const value = i < 10 ? `0${i}` : `${i}`;
+    return {
+      text: value,
+      value: `${i}`,
+      id: `minute-${value}`,
+    };
+  });
+
+  const handleHourClick = (e: React.MouseEvent<HTMLLIElement>) => {
+    const target = e.target as HTMLLIElement;
+    const value = target.getAttribute("data-value");
+    setHour(value as string);
   };
 
-  const handleMinuteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    if (isNaN(value)) return;
-    if (value > 59) {
-      setMinute(59);
-      return;
-    }
-    setMinute(value);
+  const handleMinuteClick = (e: React.MouseEvent<HTMLLIElement>) => {
+    const target = e.target as HTMLLIElement;
+    const value = target.getAttribute("data-value");
+    setMinute(value as string);
   };
 
   const reset = () => {
-    setHour(0);
-    setMinute(0);
+    setHour("");
+    setMinute("");
     onReset();
   };
 
@@ -143,26 +153,21 @@ const Modal = ({
         {mode === MODE_TYPE.TIMING && (
           <div className='mb-8'>
             <p className='text-white text-xl mb-3'>時間設定</p>
-            <input
-              type='text'
-              className='bg-gray-800 text-white px-4 py-2 w-20 rounded-md border-2 border-gray-600'
+
+            <Select
               placeholder='小時'
-              onChange={handleHourChange}
               value={hour}
-              min={0}
-              max={24}
+              hourOptions={hourOptions}
+              handleClick={handleHourClick}
             />
 
             <span className='text-white px-2'> : </span>
 
-            <input
-              type='text'
-              className='bg-gray-800 text-white px-4 py-2 w-20 rounded-md border-2 border-gray-600'
+            <Select
               placeholder='分鐘'
-              onChange={handleMinuteChange}
               value={minute}
-              min={0}
-              max={60}
+              hourOptions={minuteOptions}
+              handleClick={handleMinuteClick}
             />
           </div>
         )}
