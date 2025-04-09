@@ -8,6 +8,7 @@ import MacUpdate from "../widgets/MacUpdate";
 import { MdRemoveRedEye } from "react-icons/md";
 import { Button, IconButton } from "../widgets/button";
 import { getOS } from "../utils/common";
+import toast from "react-hot-toast";
 
 const SCREEN_TYPE = {
   BLUE_SCREEN_DEATH: "blueScreenDeath",
@@ -64,7 +65,7 @@ const Screen = () => {
 
   const handleStart = () => {
     if (mode === MODE_TYPE.TIMING && !totalTime) {
-      alert("請設定好定時");
+      toast.error("請選擇所要定時的時間");
       return;
     }
 
@@ -75,8 +76,6 @@ const Screen = () => {
 
   const handleHourClick = (e: React.MouseEvent<HTMLLIElement>) => {
     const value = (e.target as HTMLLIElement).getAttribute("data-value");
-    console.log(value);
-
     setHour(value as string);
   };
 
@@ -86,8 +85,8 @@ const Screen = () => {
   };
 
   const handleReset = () => {
-    setHour("00");
-    setMinute("00");
+    setHour("0");
+    setMinute("0");
     setProgress(0);
   };
 
