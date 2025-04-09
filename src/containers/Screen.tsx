@@ -57,7 +57,7 @@ const Screen = () => {
   const hourInSeconds = parseInt(hour) * 3600 * 1000 || 0;
   const minuteInSeconds = parseInt(minute) * 60 * 1000 || 0;
   const manualTime = hourInSeconds + minuteInSeconds;
-  const totalTime = mode === MODE_TYPE.INFINITE ? 10 * 1000 : manualTime;
+  const totalTime = mode === MODE_TYPE.INFINITE ? 60 * 1000 : manualTime;
 
   const handleClick = (type: ScreenType) => {
     setScreenType(type);
