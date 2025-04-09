@@ -46,8 +46,8 @@ const Screen = () => {
   const [isShowSideBar, setIsShowSideBar] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const [hour, setHour] = useState("");
-  const [minute, setMinute] = useState("");
+  const [hour, setHour] = useState("0");
+  const [minute, setMinute] = useState("0");
   const [mode, setMode] = useState(MODE_TYPE.INFINITE);
   const [isShowBackground, setIsShowBackground] = useState(false);
 
@@ -55,13 +55,19 @@ const Screen = () => {
 
   const hourInSeconds = parseInt(hour) * 3600 * 1000 || 0;
   const minuteInSeconds = parseInt(minute) * 60 * 1000 || 0;
-  const totalTime = hourInSeconds + minuteInSeconds;
+  const manualTime = hourInSeconds + minuteInSeconds;
+  const totalTime = mode === MODE_TYPE.INFINITE ? 10 * 1000 : manualTime;
 
   const handleClick = (type: ScreenType) => {
     setScreenType(type);
   };
 
   const handleStart = () => {
+    if (mode === MODE_TYPE.TIMING && !totalTime) {
+      alert("請設定好定時");
+      return;
+    }
+
     setIsProcessing(true);
     setIsShowSideBar(false);
     document.documentElement.requestFullscreen();
@@ -69,6 +75,8 @@ const Screen = () => {
 
   const handleHourClick = (e: React.MouseEvent<HTMLLIElement>) => {
     const value = (e.target as HTMLLIElement).getAttribute("data-value");
+    console.log(value);
+
     setHour(value as string);
   };
 
@@ -78,8 +86,8 @@ const Screen = () => {
   };
 
   const handleReset = () => {
-    setHour("");
-    setMinute("");
+    setHour("00");
+    setMinute("00");
     setProgress(0);
   };
 
@@ -95,7 +103,7 @@ const Screen = () => {
   useEffect(() => {
     if (!isProcessing) return;
 
-    const start = performance.now();
+    let start = performance.now();
     const totalDuration = totalTime;
 
     // 初期速度占比
@@ -134,6 +142,21 @@ const Screen = () => {
       } else {
         setProgress(100); // 保底
       }
+
+      // 如果是無限循環模式，則重置開始時間 & 重置進度條
+      if (mode === MODE_TYPE.INFINITE && progress >= 100) {
+        start = performance.now();
+        setProgress(0);
+        requestRef.current = requestAnimationFrame(animate);
+      }
+
+      // 如果是定時模式，則結束後跳出全螢幕
+      if (mode === MODE_TYPE.TIMING && progress >= 100) {
+        setIsProcessing(false);
+        setIsShowSideBar(true);
+        setProgress(0);
+        document.exitFullscreen();
+      }
     };
 
     requestRef.current = requestAnimationFrame(animate);
@@ -141,7 +164,7 @@ const Screen = () => {
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
     };
-  }, [isProcessing, totalTime]);
+  }, [isProcessing, mode, totalTime]);
 
   /* 根據作業系統選擇不同的螢幕樣式 */
   useEffect(() => {
@@ -165,6 +188,7 @@ const Screen = () => {
       if (!document.fullscreenElement) {
         setIsShowSideBar(true);
         setIsProcessing(false);
+        setProgress(0);
       }
     };
 
@@ -225,12 +249,17 @@ const Screen = () => {
         <div className='mb-8'>
           <p className='text-white text-xl mb-3'>選擇模式</p>
           <div className='flex gap-2'>
-            <Button
-              onClick={() => setMode(MODE_TYPE.INFINITE)}
-              active={mode === MODE_TYPE.INFINITE}
-            >
-              無限循環
-            </Button>
+            <Tooltip anchorSelect='.infinite-tip' place='top'>
+              一輪耗時 1 分鐘
+            </Tooltip>
+            <a className='infinite-tip' data-tooltip-offset={10}>
+              <Button
+                onClick={() => setMode(MODE_TYPE.INFINITE)}
+                active={mode === MODE_TYPE.INFINITE}
+              >
+                無限循環
+              </Button>
+            </a>
 
             <Button
               onClick={() => setMode(MODE_TYPE.TIMING)}
@@ -272,7 +301,7 @@ const Screen = () => {
           <Tooltip anchorSelect='.show-background' place='top'>
             持續點擊以顯示背景
           </Tooltip>
-          <a className='show-background' data-tooltip-offset={10}>
+          <a className='show-background' data-tooltip-offset={20}>
             <IconButton onMouseUp={handleMouseUp} onMouseDown={handleMouseDown}>
               <MdRemoveRedEye />
             </IconButton>
