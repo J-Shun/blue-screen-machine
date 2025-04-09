@@ -1,54 +1,54 @@
-# React + TypeScript + Vite
+# Blue Screen Machine (藍屏機)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+你是不是也需要這樣的情境？
 
-Currently, two official plugins are available:
+**當主管走過來時，畫面看起來就像是電腦目前藍屏當機，或系統正忙著更新，不得已只好先放下手邊的工作**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+這個專案就是專為這樣的情境而生！
 
-## Expanding the ESLint configuration
+## 功能特色
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **三種可選畫面**：
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+  - Windows 藍底白字藍屏
+  - Windows 更新畫面
+  - macOS 更新畫面
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **自動判斷裝置**：
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+  - 根據使用者裝置，自動預設顯示對應的錯誤、更新畫面（無支援手機）
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- **無限循環模式**：
+
+  - 開始使用後，進度條會無限循環處理狀態，直到你手動退出
+
+- **定時模式**：
+
+  - 可設定小時與分鐘，時間一到自動退出
+
+- **真實 Loading 體驗**：
+
+  - 進度條採用階段性計算邏輯，模擬真實系統更新時的卡頓感
+
+- **自動全螢幕啟動**：
+  - 啟動即進入全螢幕模式，直到退出為止
+
+## 技術棧
+
+- Vite
+- React
+- TypeScript
+- Tailwind CSS
+- react-hot-toast
+- react-icons
+- react-tooltip
+
+## 溫馨提醒
+
+本項專案誕生於一個午休時對同事開的小玩笑
+
+請合理使用本工具，並小心玩笑開過頭導致工作進度延後（或是根本沒有工作）
+
+## 使用網址
+
+https://j-shun.github.io/blue-screen-machine/
