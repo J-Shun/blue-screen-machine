@@ -1,0 +1,25 @@
+{
+  "option": "設定選單",
+  "selectLanguage": "選擇語言",
+  "selectDisplay": "選擇畫面",
+  "selectMode": "選擇模式",
+  "loop": "無限循環",
+  "timer": "計時",
+  "timerOption": "時間設定",
+  "hour": "小時",
+  "minute": "分鐘",
+  "start": "開始",
+  "reset": "重置",
+  "background": {
+    "windowsBlueScreen": "Windows 藍屏",
+    "windowsUpdate": "Windows 更新",
+    "macUpdate": "Mac 更新"
+  },
+  "tooltip": {
+    "loopInfo": "一輪耗時 1 分鐘",
+    "clickToShowBackground": "點擊不放以顯示背景"
+  },
+  "toast": {
+    "noTime": "請輸入時間"
+  }
+}

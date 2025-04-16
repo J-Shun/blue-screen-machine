@@ -1,0 +1,25 @@
+{
+  "option": "オプション",
+  "selectLanguage": "言語を選択",
+  "selectDisplay": "画面を選択",
+  "selectMode": "モードを選択",
+  "loop": "無限ループ",
+  "timer": "タイマー",
+  "timerOption": "タイマー設定",
+  "hour": "時間",
+  "minute": "分",
+  "start": "開始",
+  "reset": "リセット",
+  "background": {
+    "windowsBlueScreen": "Windows ブルースクリーン",
+    "windowsUpdate": "Windows アップデート",
+    "macUpdate": "Mac アップデート"
+  },
+  "tooltip": {
+    "loopInfo": "1 ループにかかる時間は 1 分です",
+    "clickToShowBackground": "背景を表示するにはクリックしてください"
+  },
+  "toast": {
+    "noTime": "時間を入力してください"
+  }
+}

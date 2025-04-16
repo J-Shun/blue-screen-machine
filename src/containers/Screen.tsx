@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import Select from "../widgets/select";
 import Modal from "../widgets/modal";
 import { Tooltip } from "react-tooltip";
@@ -7,7 +8,7 @@ import BlueScreenUpdate from "../widgets/BlueScreenUpdate";
 import MacUpdate from "../widgets/MacUpdate";
 import { MdRemoveRedEye } from "react-icons/md";
 import { Button, IconButton } from "../widgets/button";
-import { getOS } from "../utils/common";
+import { getOS } from "../utils";
 import toast from "react-hot-toast";
 
 const SCREEN_TYPE = {
@@ -42,6 +43,8 @@ const minuteOptions = Array.from({ length: 60 }, (_, i) => {
 });
 
 const Screen = () => {
+  const { t, i18n } = useTranslation();
+
   const [progress, setProgress] = useState(0);
   const [screenType, setScreenType] = useState(SCREEN_TYPE.BLUE_SCREEN_DEATH);
   const [isShowSideBar, setIsShowSideBar] = useState(true);
@@ -63,9 +66,13 @@ const Screen = () => {
     setScreenType(type);
   };
 
+  const handleLanguageClick = (lang: string) => {
+    i18n.changeLanguage(lang);
+  };
+
   const handleStart = () => {
     if (mode === MODE_TYPE.TIMING && !totalTime) {
-      toast.error("請選擇所要定時的時間");
+      toast.error(t("toast.noTime"));
       return;
     }
 
@@ -199,7 +206,7 @@ const Screen = () => {
   }, []);
 
   return (
-    <div className='w-full min-h-screen flex flex-col relative overflow-hidden'>
+    <div className='w-full min-h-screen flex flex-col relative overflow-hidden cursor-none'>
       {screenType === SCREEN_TYPE.BLUE_SCREEN_DEATH && (
         <BlueScreenDeath progress={progress} />
       )}
@@ -214,19 +221,43 @@ const Screen = () => {
 
       <Modal isShow={isShowSideBar} isShowBackground={isShowBackground}>
         <h2 className='w-full text-white text-3xl font-bold text-center mb-8'>
-          設定選單
+          {t("option")}
         </h2>
 
         <div className='mb-8'>
-          <p className='text-white text-xl mb-3'>選擇樣式</p>
+          <p className='text-white text-xl mb-3'></p>
           <div className='flex gap-2'>
+            <Button
+              onClick={() => handleLanguageClick("zh-TW")}
+              active={i18n.language === "zh-TW"}
+            >
+              中文
+            </Button>
+            <Button
+              onClick={() => handleLanguageClick("en")}
+              active={i18n.language === "en"}
+            >
+              English
+            </Button>
+            <Button
+              onClick={() => handleLanguageClick("ja")}
+              active={i18n.language === "ja"}
+            >
+              日本語
+            </Button>
+          </div>
+        </div>
+
+        <div className='mb-8'>
+          <p className='text-white text-xl mb-3'>{t("selectDisplay")}</p>
+          <div className='flex gap-2 flex-wrap'>
             <Button
               onClick={() =>
                 handleClick(SCREEN_TYPE.BLUE_SCREEN_DEATH as ScreenType)
               }
               active={screenType === SCREEN_TYPE.BLUE_SCREEN_DEATH}
             >
-              Windows 藍屏
+              {t("background.windowsBlueScreen")}
             </Button>
             <Button
               onClick={() =>
@@ -234,29 +265,29 @@ const Screen = () => {
               }
               active={screenType === SCREEN_TYPE.BLUE_SCREEN_UPDATE}
             >
-              Windows 更新
+              {t("background.windowsUpdate")}
             </Button>
             <Button
               onClick={() => handleClick(SCREEN_TYPE.MAC_UPDATE as ScreenType)}
               active={screenType === SCREEN_TYPE.MAC_UPDATE}
             >
-              Mac 更新
+              {t("background.macUpdate")}
             </Button>
           </div>
         </div>
 
         <div className='mb-8'>
-          <p className='text-white text-xl mb-3'>選擇模式</p>
+          <p className='text-white text-xl mb-3'>{t("selectMode")}</p>
           <div className='flex gap-2'>
             <Tooltip anchorSelect='.infinite-tip' place='top'>
-              一輪耗時 1 分鐘
+              {t("tooltip.loopInfo")}
             </Tooltip>
             <a className='infinite-tip' data-tooltip-offset={10}>
               <Button
                 onClick={() => setMode(MODE_TYPE.INFINITE)}
                 active={mode === MODE_TYPE.INFINITE}
               >
-                無限循環
+                {t("loop")}
               </Button>
             </a>
 
@@ -264,17 +295,17 @@ const Screen = () => {
               onClick={() => setMode(MODE_TYPE.TIMING)}
               active={mode === MODE_TYPE.TIMING}
             >
-              定時
+              {t("timer")}
             </Button>
           </div>
         </div>
 
         {mode === MODE_TYPE.TIMING && (
           <div className='mb-8'>
-            <p className='text-white text-xl mb-3'>時間設定</p>
+            <p className='text-white text-xl mb-3'>{t("timerOption")}</p>
 
             <Select
-              placeholder='小時'
+              placeholder={t("hour")}
               value={hour}
               hourOptions={hourOptions}
               handleClick={handleHourClick}
@@ -283,7 +314,7 @@ const Screen = () => {
             <span className='text-white px-2'> : </span>
 
             <Select
-              placeholder='分鐘'
+              placeholder={t("minute")}
               value={minute}
               hourOptions={minuteOptions}
               handleClick={handleMinuteClick}
@@ -292,13 +323,13 @@ const Screen = () => {
         )}
 
         <div className='flex gap-2 mb-8'>
-          <Button onClick={handleStart}>開始</Button>
-          <Button onClick={handleReset}>重置</Button>
+          <Button onClick={handleStart}>{t("start")}</Button>
+          <Button onClick={handleReset}>{t("reset")}</Button>
         </div>
 
         <div>
           <Tooltip anchorSelect='.show-background' place='top'>
-            持續點擊以顯示背景
+            {t("tooltip.clickToShowBackground")}
           </Tooltip>
           <a className='show-background' data-tooltip-offset={20}>
             <IconButton onMouseUp={handleMouseUp} onMouseDown={handleMouseDown}>

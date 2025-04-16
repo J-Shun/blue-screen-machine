@@ -10,7 +10,7 @@ const Button = ({
   return (
     <button
       type='button'
-      className={`hover:bg-gray-950 text-white px-4 py-2 rounded-md translation duration-200 cursor-pointer ${
+      className={`hover:bg-gray-950 text-white px-4 py-2 rounded-md translation duration-200 cursor-pointer whitespace-nowrap ${
         active ? "bg-gray-950" : "bg-gray-700"
       }`}
       onClick={onClick}

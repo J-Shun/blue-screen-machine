@@ -9,7 +9,7 @@ const Modal = ({
 }) => {
   return (
     <div
-      className={`fixed inset-0 flex items-center justify-center transition-all duration-500 ${
+      className={`fixed inset-0 flex items-center justify-center transition-all duration-500 cursor-default ${
         isShow
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"

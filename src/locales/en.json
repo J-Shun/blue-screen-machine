@@ -1,0 +1,25 @@
+{
+  "option": "Options",
+  "selectLanguage": "Select Language",
+  "selectDisplay": "Select Display",
+  "selectMode": "Select Mode",
+  "loop": "Infinite Loop",
+  "timer": "Timer",
+  "timerOption": "Timer Settings",
+  "hour": "Hour",
+  "minute": "Minute",
+  "start": "Start",
+  "reset": "Reset",
+  "background": {
+    "windowsBlueScreen": "Windows Blue Screen",
+    "windowsUpdate": "Windows Update",
+    "macUpdate": "Mac Update"
+  },
+  "tooltip": {
+    "loopInfo": "One loop takes 1 minute",
+    "clickToShowBackground": "Click and hold to show background"
+  },
+  "toast": {
+    "noTime": "Please enter a time"
+  }
+}

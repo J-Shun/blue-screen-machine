@@ -8,4 +8,15 @@ const getOS = () => {
   return "Unknown";
 };
 
-export { getOS };
+const setLocalStorageItem = <T = string>(key: string, value: T) => {
+  const stringifiedValue = JSON.stringify(value);
+  localStorage.setItem(key, stringifiedValue);
+}
+
+const getLocalStorageItem = <T = string>(key: string): T | null => {
+  const item = localStorage.getItem(key);
+  if (!item) return null;
+  return JSON.parse(item) as T;
+};
+
+export { getOS, setLocalStorageItem, getLocalStorageItem };
