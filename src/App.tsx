@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <Toaster toastOptions={{ duration: 2000 }} />
-      <Screen />;
+      <Screen />
     </>
   );
 }
