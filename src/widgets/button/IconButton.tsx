@@ -3,11 +3,13 @@ const IconButton = ({
   onClick,
   onMouseUp,
   onMouseDown,
+  onMouseLeave,
 }: {
   children: React.ReactNode;
   onClick?: (e: React.MouseEvent) => void;
   onMouseUp?: (e: React.MouseEvent) => void;
   onMouseDown?: (e: React.MouseEvent) => void;
+  onMouseLeave?: (e: React.MouseEvent) => void;
 }) => {
   return (
     <button
@@ -16,6 +18,7 @@ const IconButton = ({
       onClick={onClick}
       onMouseUp={onMouseUp}
       onMouseDown={onMouseDown}
+      onMouseLeave={onMouseLeave}
     >
       {children}
     </button>

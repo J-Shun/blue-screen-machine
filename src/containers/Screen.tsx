@@ -1,25 +1,25 @@
-import { useEffect, useState, useRef } from "react";
-import { useTranslation } from "react-i18next";
-import Select from "../widgets/select";
-import Modal from "../widgets/modal";
-import { Tooltip } from "react-tooltip";
-import BlueScreenDeath from "../widgets/BlueScreenDeath";
-import BlueScreenUpdate from "../widgets/BlueScreenUpdate";
-import MacUpdate from "../widgets/MacUpdate";
-import { MdRemoveRedEye } from "react-icons/md";
-import { Button, IconButton } from "../widgets/button";
-import { getOS } from "../utils";
-import toast from "react-hot-toast";
+import { useEffect, useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import Select from '../widgets/select';
+import Modal from '../widgets/modal';
+import { Tooltip } from 'react-tooltip';
+import BlueScreenDeath from '../widgets/BlueScreenDeath';
+import BlueScreenUpdate from '../widgets/BlueScreenUpdate';
+import MacUpdate from '../widgets/MacUpdate';
+import { MdRemoveRedEye } from 'react-icons/md';
+import { Button, IconButton } from '../widgets/button';
+import { getOS } from '../utils';
+import toast from 'react-hot-toast';
 
 const SCREEN_TYPE = {
-  BLUE_SCREEN_DEATH: "blueScreenDeath",
-  BLUE_SCREEN_UPDATE: "blueScreenUpdate",
-  MAC_UPDATE: "macUpdate",
+  BLUE_SCREEN_DEATH: 'blueScreenDeath',
+  BLUE_SCREEN_UPDATE: 'blueScreenUpdate',
+  MAC_UPDATE: 'macUpdate',
 };
 
 const MODE_TYPE = {
-  INFINITE: "infinite",
-  TIMING: "timing",
+  INFINITE: 'infinite',
+  TIMING: 'timing',
 };
 
 type ScreenType = keyof typeof SCREEN_TYPE;
@@ -50,8 +50,8 @@ const Screen = () => {
   const [isShowSideBar, setIsShowSideBar] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const [hour, setHour] = useState("0");
-  const [minute, setMinute] = useState("0");
+  const [hour, setHour] = useState('0');
+  const [minute, setMinute] = useState('0');
   const [mode, setMode] = useState(MODE_TYPE.INFINITE);
   const [isShowBackground, setIsShowBackground] = useState(false);
 
@@ -72,7 +72,7 @@ const Screen = () => {
 
   const handleStart = () => {
     if (mode === MODE_TYPE.TIMING && !totalTime) {
-      toast.error(t("toast.noTime"));
+      toast.error(t('toast.noTime'));
       return;
     }
 
@@ -82,18 +82,18 @@ const Screen = () => {
   };
 
   const handleHourClick = (e: React.MouseEvent<HTMLLIElement>) => {
-    const value = (e.target as HTMLLIElement).getAttribute("data-value");
+    const value = (e.target as HTMLLIElement).getAttribute('data-value');
     setHour(value as string);
   };
 
   const handleMinuteClick = (e: React.MouseEvent<HTMLLIElement>) => {
-    const value = (e.target as HTMLLIElement).getAttribute("data-value");
+    const value = (e.target as HTMLLIElement).getAttribute('data-value');
     setMinute(value as string);
   };
 
   const handleReset = () => {
-    setHour("0");
-    setMinute("0");
+    setHour('0');
+    setMinute('0');
     setProgress(0);
   };
 
@@ -176,10 +176,10 @@ const Screen = () => {
   useEffect(() => {
     const os = getOS();
     switch (os) {
-      case "Windows":
+      case 'Windows':
         setScreenType(SCREEN_TYPE.BLUE_SCREEN_DEATH);
         break;
-      case "MacOS":
+      case 'MacOS':
         setScreenType(SCREEN_TYPE.MAC_UPDATE);
         break;
       default:
@@ -198,10 +198,10 @@ const Screen = () => {
       }
     };
 
-    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
 
     return () => {
-      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
     };
   }, []);
 
@@ -219,29 +219,32 @@ const Screen = () => {
         <MacUpdate progress={progress} />
       )}
 
-      <Modal isShow={isShowSideBar} isShowBackground={isShowBackground}>
+      <Modal
+        isShow={isShowSideBar}
+        isShowBackground={isShowBackground}
+      >
         <h2 className='w-full text-white text-3xl font-bold text-center mb-8'>
-          {t("option")}
+          {t('option')}
         </h2>
 
         <div className='mb-8'>
           <p className='text-white text-xl mb-3'></p>
           <div className='flex gap-2'>
             <Button
-              onClick={() => handleLanguageClick("zh-TW")}
-              active={i18n.language === "zh-TW"}
+              onClick={() => handleLanguageClick('zh-TW')}
+              active={i18n.language === 'zh-TW'}
             >
               中文
             </Button>
             <Button
-              onClick={() => handleLanguageClick("en")}
-              active={i18n.language === "en"}
+              onClick={() => handleLanguageClick('en')}
+              active={i18n.language === 'en'}
             >
               English
             </Button>
             <Button
-              onClick={() => handleLanguageClick("ja")}
-              active={i18n.language === "ja"}
+              onClick={() => handleLanguageClick('ja')}
+              active={i18n.language === 'ja'}
             >
               日本語
             </Button>
@@ -249,7 +252,7 @@ const Screen = () => {
         </div>
 
         <div className='mb-8'>
-          <p className='text-white text-xl mb-3'>{t("selectDisplay")}</p>
+          <p className='text-white text-xl mb-3'>{t('selectDisplay')}</p>
           <div className='flex gap-2 flex-wrap'>
             <Button
               onClick={() =>
@@ -257,7 +260,7 @@ const Screen = () => {
               }
               active={screenType === SCREEN_TYPE.BLUE_SCREEN_DEATH}
             >
-              {t("background.windowsBlueScreen")}
+              {t('background.windowsBlueScreen')}
             </Button>
             <Button
               onClick={() =>
@@ -265,29 +268,35 @@ const Screen = () => {
               }
               active={screenType === SCREEN_TYPE.BLUE_SCREEN_UPDATE}
             >
-              {t("background.windowsUpdate")}
+              {t('background.windowsUpdate')}
             </Button>
             <Button
               onClick={() => handleClick(SCREEN_TYPE.MAC_UPDATE as ScreenType)}
               active={screenType === SCREEN_TYPE.MAC_UPDATE}
             >
-              {t("background.macUpdate")}
+              {t('background.macUpdate')}
             </Button>
           </div>
         </div>
 
         <div className='mb-8'>
-          <p className='text-white text-xl mb-3'>{t("selectMode")}</p>
+          <p className='text-white text-xl mb-3'>{t('selectMode')}</p>
           <div className='flex gap-2'>
-            <Tooltip anchorSelect='.infinite-tip' place='top'>
-              {t("tooltip.loopInfo")}
+            <Tooltip
+              anchorSelect='.infinite-tip'
+              place='top'
+            >
+              {t('tooltip.loopInfo')}
             </Tooltip>
-            <a className='infinite-tip' data-tooltip-offset={10}>
+            <a
+              className='infinite-tip'
+              data-tooltip-offset={10}
+            >
               <Button
                 onClick={() => setMode(MODE_TYPE.INFINITE)}
                 active={mode === MODE_TYPE.INFINITE}
               >
-                {t("loop")}
+                {t('loop')}
               </Button>
             </a>
 
@@ -295,17 +304,17 @@ const Screen = () => {
               onClick={() => setMode(MODE_TYPE.TIMING)}
               active={mode === MODE_TYPE.TIMING}
             >
-              {t("timer")}
+              {t('timer')}
             </Button>
           </div>
         </div>
 
         {mode === MODE_TYPE.TIMING && (
           <div className='mb-8'>
-            <p className='text-white text-xl mb-3'>{t("timerOption")}</p>
+            <p className='text-white text-xl mb-3'>{t('timerOption')}</p>
 
             <Select
-              placeholder={t("hour")}
+              placeholder={t('hour')}
               value={hour}
               hourOptions={hourOptions}
               handleClick={handleHourClick}
@@ -314,7 +323,7 @@ const Screen = () => {
             <span className='text-white px-2'> : </span>
 
             <Select
-              placeholder={t("minute")}
+              placeholder={t('minute')}
               value={minute}
               hourOptions={minuteOptions}
               handleClick={handleMinuteClick}
@@ -323,16 +332,26 @@ const Screen = () => {
         )}
 
         <div className='flex gap-2 mb-8'>
-          <Button onClick={handleStart}>{t("start")}</Button>
-          <Button onClick={handleReset}>{t("reset")}</Button>
+          <Button onClick={handleStart}>{t('start')}</Button>
+          <Button onClick={handleReset}>{t('reset')}</Button>
         </div>
 
         <div>
-          <Tooltip anchorSelect='.show-background' place='top'>
-            {t("tooltip.clickToShowBackground")}
+          <Tooltip
+            anchorSelect='.show-background'
+            place='top'
+          >
+            {t('tooltip.clickToShowBackground')}
           </Tooltip>
-          <a className='show-background' data-tooltip-offset={20}>
-            <IconButton onMouseUp={handleMouseUp} onMouseDown={handleMouseDown}>
+          <a
+            className='show-background'
+            data-tooltip-offset={20}
+          >
+            <IconButton
+              onMouseUp={handleMouseUp}
+              onMouseDown={handleMouseDown}
+              onMouseLeave={handleMouseUp}
+            >
               <MdRemoveRedEye />
             </IconButton>
           </a>
