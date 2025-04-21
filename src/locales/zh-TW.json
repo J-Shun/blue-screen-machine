@@ -21,5 +21,14 @@
   },
   "toast": {
     "noTime": "請輸入時間"
+  },
+  "blueScreen": {
+    "info": "您的裝置發生問題，因此必須重新啟動。",
+    "gatherError": "我們剛剛正在收集某些錯誤資訊，接著您可以重新啟動",
+    "complete": "已完成 {{progress}}%",
+    "detail": "如需此問題與可能修正的詳細資訊，請瀏覽 https://www.windows.com/stopcode",
+    "needInfo": "致電支援人員時，請提供此資訊:",
+    "errorCode": "停止代碼:",
+    "failedData": "失敗的項目:"
   }
 }

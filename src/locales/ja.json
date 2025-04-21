@@ -21,5 +21,14 @@
   },
   "toast": {
     "noTime": "時間を入力してください"
+  },
+  "blueScreen": {
+    "info": "問題が発生したため、PC を再起動する必要があります。",
+    "gatherError": "エラー情報を収集しています。再起動できます。",
+    "complete": "{{progress}}% 完了",
+    "detail": "この問題と可能な解決方法の詳細については、https://www.windows.com/stopcode を参照してください。",
+    "needInfo": "サポート担当者に連絡する場合は、この情報を伝えてください:",
+    "errorCode": "停止コード:",
+    "failedData": "失敗した内容:"
   }
 }

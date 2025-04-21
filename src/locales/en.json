@@ -21,5 +21,14 @@
   },
   "toast": {
     "noTime": "Please enter a time"
+  },
+  "blueScreen": {
+    "info": "Your PC ran into a problem and needs to restart. We're just collecting some error info, and then we'll restart for you.",
+    "gatherError": "",
+    "complete": "{{progress}}% complete",
+    "detail": "For more information about this issue and possible fixes, visit https://www.windows.com/stopcode",
+    "needInfo": "If you call a support person, give them this info:",
+    "errorCode": "Stop code:",
+    "failedData": "What failed:"
   }
 }

@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 /* source: https://uiverse.io/SelfMadeSystem/black-yak-68 */
 :root {
@@ -48,7 +48,7 @@
 }
 
 .dot::before {
-  content: '';
+  content: "";
   display: block;
   width: var(--dot-size);
   height: var(--dot-size);
@@ -120,7 +120,7 @@
   overflow: hidden;
 }
 
-.loader-proccess {
+.loader-process {
   box-sizing: border-box;
   width: 0;
   height: 6px;
