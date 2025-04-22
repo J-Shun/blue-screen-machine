@@ -30,5 +30,10 @@
     "needInfo": "If you call a support person, give them this info:",
     "errorCode": "Stop code:",
     "failedData": "What failed:"
+  },
+  "windowsUpdate": {
+    "info": "Working on updates",
+    "progress": "{{progress}}% complete",
+    "warning": "Don't turn off your computer"
   }
 }

@@ -30,5 +30,10 @@
     "needInfo": "致電支援人員時，請提供此資訊:",
     "errorCode": "停止代碼:",
     "failedData": "失敗的項目:"
+  },
+  "windowsUpdate": {
+    "info": "正在處理更新",
+    "progress": "{{progress}}% 完成",
+    "warning": "請勿關閉電腦"
   }
 }

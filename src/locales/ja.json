@@ -30,5 +30,10 @@
     "needInfo": "サポート担当者に連絡する場合は、この情報を伝えてください:",
     "errorCode": "停止コード:",
     "failedData": "失敗した内容:"
+  },
+  "windowsUpdate": {
+    "info": "更新プログラムを構成しています",
+    "progress": "{{progress}}% 完了",
+    "warning": "コンピューターの電源を切らないでください"
   }
 }
